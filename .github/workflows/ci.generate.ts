@@ -87,6 +87,7 @@ RUSTFLAGS<<__1
   -C link-arg=-Wl,--allow-shlib-undefined
   -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
   -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+  -C link-arg=-Wl,--build-id=sha1
   --cfg tokio_unstable
   \${{ env.RUSTFLAGS }}
 __1
@@ -99,6 +100,7 @@ RUSTDOCFLAGS<<__1
   -C link-arg=-Wl,--allow-shlib-undefined
   -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
   -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+  -C link-arg=-Wl,--build-id=sha1
   \${{ env.RUSTFLAGS }}
 __1
 CC=clang-${llvmVersion}
