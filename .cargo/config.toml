@@ -14,6 +14,9 @@ rustflags = [
 [target.aarch64-apple-darwin]
 rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-Wl,--build-id=sha1"]
+
 [target.'cfg(all())']
 rustflags = [
   "-D",

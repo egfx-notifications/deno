@@ -274,6 +274,7 @@ jobs:
             -C link-arg=-Wl,--allow-shlib-undefined
             -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
             -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+            -C link-arg=-Wl,--build-id=sha1
             --cfg tokio_unstable
             ${{ env.RUSTFLAGS }}
           __1
@@ -286,6 +287,7 @@ jobs:
             -C link-arg=-Wl,--allow-shlib-undefined
             -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
             -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+            -C link-arg=-Wl,--build-id=sha1
             ${{ env.RUSTFLAGS }}
           __1
           CC=clang-16
@@ -311,8 +313,8 @@ jobs:
           path: |-
             ~/.cargo/registry/index
             ~/.cargo/registry/cache
-          key: '48-cargo-home-${{ matrix.os }}-${{ hashFiles(''Cargo.lock'') }}'
-          restore-keys: '48-cargo-home-${{ matrix.os }}'
+          key: '49-cargo-home-${{ matrix.os }}-${{ hashFiles(''Cargo.lock'') }}'
+          restore-keys: '49-cargo-home-${{ matrix.os }}'
         if: '!(github.event_name == ''pull_request'' && matrix.skip_pr)'
       - name: Restore cache build output (PR)
         uses: actions/cache/restore@v3
@@ -324,7 +326,7 @@ jobs:
             !./target/*/*.zip
             !./target/*/*.tar.gz
           key: never_saved
-          restore-keys: '48-cargo-target-${{ matrix.os }}-${{ matrix.profile }}-${{ matrix.job }}-'
+          restore-keys: '49-cargo-target-${{ matrix.os }}-${{ matrix.profile }}-${{ matrix.job }}-'
       - name: Apply and update mtime cache
         if: '!(github.event_name == ''pull_request'' && matrix.skip_pr) && (!startsWith(github.ref, ''refs/tags/''))'
         uses: ./.github/mtime_cache
@@ -612,7 +614,7 @@ jobs:
             !./target/*/gn_out
             !./target/*/*.zip
             !./target/*/*.tar.gz
-          key: '48-cargo-target-${{ matrix.os }}-${{ matrix.profile }}-${{ matrix.job }}-${{ github.sha }}'
+          key: '49-cargo-target-${{ matrix.os }}-${{ matrix.profile }}-${{ matrix.job }}-${{ github.sha }}'
   publish-canary:
     name: publish canary
     runs-on: ubuntu-22.04

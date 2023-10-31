@@ -5,7 +5,7 @@ import * as yaml from "https://deno.land/std@0.173.0/encoding/yaml.ts";
 // Bump this number when you want to purge the cache.
 // Note: the tools/release/01_bump_crate_versions.ts script will update this version
 // automatically via regex, so ensure that this line maintains this format.
-const cacheVersion = 48;
+const cacheVersion = 49;
 
 const Runners = (() => {
   const ubuntuRunner = "ubuntu-22.04";
@@ -87,6 +87,7 @@ RUSTFLAGS<<__1
   -C link-arg=-Wl,--allow-shlib-undefined
   -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
   -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+  -C link-arg=-Wl,--build-id=sha1
   --cfg tokio_unstable
   \${{ env.RUSTFLAGS }}
 __1
@@ -99,6 +100,7 @@ RUSTDOCFLAGS<<__1
   -C link-arg=-Wl,--allow-shlib-undefined
   -C link-arg=-Wl,--thinlto-cache-dir=$(pwd)/target/release/lto-cache
   -C link-arg=-Wl,--thinlto-cache-policy,cache_size_bytes=700m
+  -C link-arg=-Wl,--build-id=sha1
   \${{ env.RUSTFLAGS }}
 __1
 CC=clang-${llvmVersion}
